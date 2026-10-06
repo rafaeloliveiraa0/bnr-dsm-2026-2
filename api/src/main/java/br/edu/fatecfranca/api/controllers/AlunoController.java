@@ -26,71 +26,75 @@ public class AlunoController {
 
 
    private final AlunoService service;
-
-
-   public AlunoController(AlunoService service) {
-       this.service = service;
-   }
-
-
-   @GetMapping
-   public List<Aluno> listarTodos() {
-       return service.listarTodos();
-   }
-
-
-   @GetMapping("/{id}")
-   public ResponseEntity<Aluno> buscarPorId(@PathVariable String id) {
-       return service.buscarPorId(id)
-               .map(ResponseEntity::ok)
-               .orElse(ResponseEntity.notFound().build());
-   }
-
-
-   @PostMapping
-   public ResponseEntity<Aluno> criar(@RequestBody Aluno aluno) {
-       Aluno alunoSalvo = service.salvar(aluno);
-
-
-       return ResponseEntity
-               .status(HttpStatus.CREATED)
-               .body(alunoSalvo);
-   }
-
-
-   @PutMapping("/{id}")
-   public ResponseEntity<Aluno> atualizar(
-           @PathVariable String id,
-           @RequestBody Aluno aluno) {
-
-
-       if (service.buscarPorId(id).isEmpty()) {
-           return ResponseEntity.notFound().build();
-       }
-
-
-       aluno.setId(id);
-
-
-       Aluno alunoAtualizado = service.salvar(aluno);
-
-
-       return ResponseEntity.ok(alunoAtualizado);
-   }
-
-
-   @DeleteMapping("/{id}")
-   public ResponseEntity<Void> excluir(@PathVariable String id) {
-
-
-       if (service.buscarPorId(id).isEmpty()) {
-           return ResponseEntity.notFound().build();
-       }
-
-
-       service.excluir(id);
-
-
-       return ResponseEntity.noContent().build();
-   }
+      private String id;
+   
+   
+      public AlunoController(AlunoService service) {
+          this.service = service;
+      }
+   
+   
+      @GetMapping
+      public List<Aluno> listarTodos() {
+          return service.listarTodos();
+      }
+   
+   
+      @GetMapping("/{id}")
+      public ResponseEntity<Aluno> buscarPorId(@PathVariable String id) {
+          return service.buscarPorId(id)
+                  .map(ResponseEntity::ok)
+                  .orElse(ResponseEntity.notFound().build());
+      }
+   
+   
+      @PostMapping
+      public ResponseEntity<Aluno> criar(@RequestBody Aluno aluno) {
+          Aluno alunoSalvo = service.salvar(aluno);
+   
+   
+          return ResponseEntity
+                  .status(HttpStatus.CREATED)
+                  .body(alunoSalvo);
+      }
+   
+   
+      @PutMapping("/{id}")
+      public ResponseEntity<Aluno> atualizar(
+              @PathVariable String id,
+              @RequestBody Aluno aluno) {
+   
+   
+          if (service.buscarPorId(id).isEmpty()) {
+              return ResponseEntity.notFound().build();
+          }
+   
+   
+          aluno.setId(id);
+   
+   
+          Aluno alunoAtualizado = service.salvar(aluno);
+   
+   
+          return ResponseEntity.ok(alunoAtualizado);
+      }
+   
+   
+      @DeleteMapping("/{id}")
+      public ResponseEntity<Void> excluir(@PathVariable String id) {
+   
+   
+          if (service.buscarPorId(id).isEmpty()) {
+              return ResponseEntity.notFound().build();
+          }
+   
+   
+          service.excluir(id);
+   
+   
+          return ResponseEntity.noContent().build();
+      }
+      public void setId(String id) {
+       this.id = id;
+}
 }

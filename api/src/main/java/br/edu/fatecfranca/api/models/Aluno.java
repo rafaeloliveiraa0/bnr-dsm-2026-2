@@ -47,5 +47,10 @@ public class Aluno {
    }
 
 
-   //*
+   public void setId(String id2) {
+    throw new UnsupportedOperationException("Unimplemented method 'setId'");
+   }
+
+
+
 }
